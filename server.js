@@ -1,25 +1,38 @@
 
-const express = require('express')
+// http://localhost:3000/
 
+const express = require('express')
+const configViewEngine = require('./src/config/viewEngine')
 const path = require('path')
 require('dotenv').config()
+const webRouter = require('./src/routes/web')
 
 const app = express()
 const port = process.env.PORT || 3000
 const hostname = process.env.HOST_NAME || 'localhost'
 
 //config template engine
-app.set('views', path.join(__dirname,'./src/views'))
-app.set('view engine', 'ejs')
+configViewEngine(app)
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+//config static files
 
-app.get('/danhne', (req, res) => {
-    res.render('sample')
-})
+//khai báo route
+app.use('/', webRouter)
 
 app.listen(port, hostname, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
